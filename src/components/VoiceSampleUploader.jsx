@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Mic, Square, Upload, Play, Pause, Download } from 'lucide-react';
+import { Mic, Square, Upload, Play, Download } from 'lucide-react';
 
 const VoiceSampleUploader = ({ onSampleReady }) => {
   const [isRecording, setIsRecording] = useState(false);
