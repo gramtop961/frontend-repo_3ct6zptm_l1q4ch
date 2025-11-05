@@ -1,28 +1,38 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
+import SplineHero from './components/SplineHero';
+import VoiceSampleUploader from './components/VoiceSampleUploader';
+import TextInput from './components/TextInput';
+import SynthesisControls from './components/SynthesisControls';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [sample, setSample] = useState(null); // { blob, url }
+  const [text, setText] = useState('Hello there! This is a demo of the voice lab.');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
+    <div className="min-h-screen bg-slate-950 text-white">
+      <div className="mx-auto max-w-5xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+        <SplineHero />
+
+        <div className="grid grid-cols-1 gap-6">
+          <VoiceSampleUploader onSampleReady={setSample} />
+          <TextInput value={text} onChange={setText} />
+          <SynthesisControls text={text} />
+        </div>
+
+        <div className="rounded-xl border border-white/10 bg-slate-900/60 p-5 text-sm text-white/70">
+          <h3 className="mb-2 text-base font-medium text-white">How this demo works</h3>
+          <ul className="list-disc space-y-1 pl-5">
+            <li>Record or upload an audio sample. You can preview or download it locally.</li>
+            <li>Enter any text and use the Preview button to hear it via your browser's speech engine.</li>
+            <li>True voice cloning requires a server model. We'll hook the Publish/Clone action to a backend next.</li>
+          </ul>
+          {sample?.url && (
+            <div className="mt-3 text-xs text-white/60">Sample captured. Size: {Math.round((sample.blob?.size || 0) / 1024)} KB</div>
+          )}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
